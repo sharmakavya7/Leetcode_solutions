@@ -1,6 +1,6 @@
 <h2><a href="https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1">0 - 1 Knapsack Problem</a></h2><h3>Medium</h3><hr><div><p>You are given weights and values of  <code>N</code>items, put these items in a knapsack of capacity <code>W</code>to get the maximum total value in the knapsack.
      Note that we have only one quantity of each item. Also given an integer W which represents knapsack capacity, 
-     <em>find out the maximum value subset of<code>val[]</code>such that sum of the weights of this subset is smaller than or equal to <code>W</code>.</p>
+     <em>find out the maximum value subset of<code>val[]</code>such that sum of the weights of this subset is smaller than or equal to <code>W</code>.<em></p>
 
 <p>&nbsp;</p>
 <p><strong>Example 1:</strong></p>
