@@ -39,7 +39,30 @@ public:
     }
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int>v;
-        helper(root, v);
+        // helper(root, v);
+        // return v;
+
+        // ITERATION: 
+        stack<TreeNode*>st;
+        TreeNode* last = NULL;
+        
+        while(root || !st.empty()) {
+            if(root!= NULL) {
+                st.push(root);
+                root = root->left;
+            }
+            else {
+                TreeNode* node = st.top();
+                if(node->right && last!=node->right) {
+                    root = node->right;
+                }   
+                else {
+                    v.push_back(node->val);
+                    last = node;
+                    st.pop();
+                }
+            }
+        }
         return v;
     }
 };
