@@ -43,7 +43,20 @@ private:
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int>v;
-        inorder(root, v);
-        return v;   
+        // inorder(root, v);
+        // return v;  
+        // ITERATIVE:
+        stack<TreeNode*>st;
+        while(root || !st.empty()) {
+            while(root) {
+                st.push(root);
+                root = root->left;
+            }
+            root = st.top();
+            v.push_back(root->val);
+            st.pop();
+            root = root->right;
+        }
+        return v; 
     }
 };
