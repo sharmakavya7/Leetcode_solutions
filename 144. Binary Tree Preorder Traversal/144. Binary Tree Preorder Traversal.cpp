@@ -30,6 +30,7 @@ using namespace std;
 
 class Solution {
 public:
+// RECURSIVE: 
     void helper(TreeNode* root, vector<int>& v) {
         if(root == NULL) {
             return;
@@ -40,7 +41,29 @@ public:
     }
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int>v;
-        helper(root, v);
+        // helper(root, v);
+        // return v;
+
+        // ITERATIVE:
+
+        stack<TreeNode*>st;
+        while(root!= NULL || !st.empty()) {
+            
+            if(root != NULL) {
+                
+                v.push_back(root->val);
+                
+                if(root->right!=NULL) {
+                    st.push(root->right);
+                }
+                
+                root = root->left;
+            }
+            else {
+                root = st.top();
+                st.pop();
+            }
+        }
         return v;
     }
 };
