@@ -4,6 +4,7 @@
         "iterator": "cpp",
         "unordered_set": "cpp",
         "xstring": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "queue": "cpp"
     }
 }
