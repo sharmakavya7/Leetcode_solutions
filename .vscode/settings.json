@@ -3,6 +3,7 @@
         "vector": "cpp",
         "iterator": "cpp",
         "unordered_set": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "unordered_map": "cpp"
     }
 }
