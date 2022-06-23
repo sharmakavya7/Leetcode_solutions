@@ -20,7 +20,7 @@ using namespace std;
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        priority_queue<int>maxh;
+        // priority_queue<int>maxh;
         int n = matrix.size();
         vector<int>nums(n*n,0);
         for(int i=0; i<n; i++) {   // converting 2D array to 1D array
@@ -28,13 +28,20 @@ public:
                 nums[i*n+j] = matrix[i][j];
             }
         }
+        // SORTING:
+        sort(nums.begin(),nums.end());     // nlogn
+        
+        int ans = nums[k-1];
+        return ans;
+        
+        // PRIORITY QUEUE:               // 2*(nlogn) ~ nlogn
         // for(auto i:nums) {
-        for(int i=0; i<nums.size(); i++) {
-            maxh.push(nums[i]);
-            if(maxh.size()>k) {
-                maxh.pop();
-            }
-        }
-        return maxh.top();
+        // for(int i=0; i<nums.size(); i++) {
+        //     maxh.push(nums[i]);      // logn 
+        //     if(maxh.size()>k) {
+        //         maxh.pop();          // logn
+        //     }
+        // }
+        // return maxh.top();
     }
 };
