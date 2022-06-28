@@ -28,7 +28,7 @@ struct Node
 class Solution
 {
     public:
-    int helper(Node* root) {
+    int helper(Node* root) {         // This function TC: O(n)
         
         if(!root) {
             return 0;
@@ -44,14 +44,14 @@ class Solution
         // sum+=root->data;
         return sum;
     }
-    bool isSumTree(Node* root)
+    bool isSumTree(Node* root)       // Total TC: O(n^2)
     {
          // Your code here
          if(!root) return true;
          if(!root->left && !root->right) {
              return true;
          }
-         if(root->data != helper(root->left) + helper(root->right)) {
+         if(root->data != helper(root->left) + helper(root->right)) {  // har node pe helper call ho rha aur har node ko ye wala fucntion bhi visit  kr rha hai
              return false;
          }
          return isSumTree(root->left) && isSumTree(root->right);
