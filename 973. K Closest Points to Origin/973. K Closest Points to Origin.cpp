@@ -20,13 +20,13 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        
+
         priority_queue<vector<int>> maxh;
         
         for (auto p : points) {
             int x = p[0], y = p[1];    // x=points[i][0], y=points[i][1]
             
-            maxh.push({x*x + y*y, x, y});
+            maxh.push({x*x + y*y, x, y}); //ek vector push kr rhe hai but us elements ke commar separated parts hai andr To access those elements, we can write maxh[0], maxh[1], maxh[2] 
             
             if(maxh.size()>k) {
                 maxh.pop();
@@ -37,7 +37,7 @@ public:
         for(int i=0; i<k; i++) {
             vector<int> top = maxh.top();
             maxh.pop();
-            dist[i] = {top[1], top[2]};  // pq.second and third
+            dist[i] = {top[1], top[2]};  
         }
         return dist;
     }
