@@ -43,13 +43,6 @@ public:
                 root->val = helper(root->left)||helper(root->right);
             }
         }
-        //     bool r = helper(root->right);
-        // if(temp==2) {
-        //     return l || r;
-        // }
-        // else if(temp==3) {
-        //     return l && r;
-        // }
         return root->val;
     }
     bool evaluateTree(TreeNode* root) {
