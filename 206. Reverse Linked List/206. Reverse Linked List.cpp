@@ -26,14 +26,33 @@ struct ListNode {
 };
 class Solution {
 public:
+    // ListNode* reverseList(ListNode* head) {
+    //     ListNode* cur = NULL;
+    //     while (head) {
+    //         ListNode* next = head -> next;
+    //         head -> next = cur;
+    //         cur = head;
+    //         head = next;
+    //     }
+    //     return cur;
+    // }
+
+    // Alternate Solution:
     ListNode* reverseList(ListNode* head) {
-        ListNode* cur = NULL;
-        while (head) {
-            ListNode* next = head -> next;
-            head -> next = cur;
-            cur = head;
-            head = next;
+        if(head==NULL) {
+            return NULL;
         }
-        return cur;
+        ListNode* prev = NULL;      // previous node
+        ListNode* cur = head; // current node
+        ListNode* next = head->next;  // next node
+        while(cur!=NULL) {
+            next = cur->next;  // cur ke next me pohocha do next ko
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+            // next = cur->next;
+        }
+        head = prev;
+        return head;
     }
 };
