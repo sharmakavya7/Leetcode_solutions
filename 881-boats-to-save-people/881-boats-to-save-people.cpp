@@ -7,22 +7,8 @@ public:
         sort(people.begin(), people.end());
         int i=0;
         int j=people.size()-1;
-        // for(int i=0; i<people.size();i++) {
         while(i<=j) {
             
-            // remain = remain-people[i];
-            // if(remain == 0 ) {
-            //     // remain=limit;
-            //     cnt++;
-            //     remain=limit;
-            // }
-            // else if(remain < 0) {
-            //     people[i] = abs(remain);
-            //     cnt++;
-            //     i--;
-            //     remain=limit;
-            // }
-            // i++;
             if(people[i]+people[j]<=limit) {
                 cnt++;
                 i++;
