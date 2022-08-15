@@ -1,27 +1,32 @@
 class Solution {
 public:
-    void helper(vector<int>& candidates,int target,int idx, vector<int>&subs, vector<vector<int>>&ans){
-        if(target == 0) {
-            ans.push_back(subs);
+    void helper(vector<int>& candidates,int target,int idx, vector<int>&subs, set<vector<int>>&ans){
+        if(idx==candidates.size()) {
+            if(target == 0) {
+                ans.insert(subs);
+                // return;
+            }
             return;
         }
-        // cout<<candidates[idx]<<" "<<target<<" ";
-
-        for(int i=idx; i<candidates.size(); i++) {
-            if(candidates[i]>target) break; // no point of it to add it to the ans if the  candidate at ith element exceeds the target no picking up hence break 
-            if(i>idx && candidates[i] == candidates[i-1])
-                continue;
-            subs.push_back(candidates[i]);
-            helper(candidates, target-candidates[i], i+1, subs, ans);
+        if(candidates[idx]<=target) {
+            subs.push_back(candidates[idx]);
+            helper(candidates, target-candidates[idx], idx+1, subs, ans);  // pick,
             subs.pop_back();
         }
+        int next_index = idx;
+        while (next_index < candidates.size() && candidates[next_index] == candidates[idx])
+            next_index++;
+        helper(candidates, target, next_index, subs, ans);
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        vector<vector<int>>ans;
+        set<vector<int>>ans;
         vector<int>subs;
         sort(candidates.begin(), candidates.end());
         helper(candidates, target, 0, subs, ans);
-
-        return ans;
+        vector<vector<int>>res;
+        for(auto x: ans) {
+            res.push_back(x);
+        }
+        return res;
     }
 };
