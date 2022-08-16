@@ -1,15 +1,20 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        map<char,int>mp;
-        for(auto c:s) {
-            mp[c]++;
+       unordered_map<char, pair<int, int>> m;
+        int idx = s.size();
+        for (int i = 0; i < s.size(); i++) {
+            m[s[i]].first++;
+            m[s[i]].second = i;
         }
-        for(int i=0; i<s.size(); i++) {
-            if(mp[s[i]]==1) {
-                return i;
+        for(auto it=m.begin(); it!=m.end(); it++) {
+            cout<<it->first<<" "<<it->second.second<<" ";
+        }
+        for (const auto& [c, p] : m) {
+            if (p.first == 1) {
+                idx = min(idx, p.second);
             }
         }
-        return -1;
+        return idx == s.size() ? -1 : idx;
     }
 };
