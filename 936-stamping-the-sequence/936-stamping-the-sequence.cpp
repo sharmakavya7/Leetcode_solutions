@@ -1,5 +1,50 @@
 class Solution {
 public:
+    vector<int> movesToStamp(string stamp, string target) {
+        int ls = stamp.size();
+        int lt = target.size();
+        vector<int> ans;
+        bool has_changed = true;
+        int end   = lt-ls;
+        
+        while (has_changed) {  // made at least one conversion to '?'
+
+            has_changed = false;
+            for(int i = 0; i<=end; i++) {  
+                bool visited = true;     // check if match is found
+                bool any_change = true;  // check if there is at least one non-visited match (all visited => no match)
+                for (int j = 0; j<ls; j++) {
+                    if (target[i+j] == '?') 
+                        continue;  // already stampped
+                    
+                    if(stamp[j] != target[i+j]) {
+                        visited = false;
+                        break;
+                    }
+                    any_change = false;
+                }
+                if (visited && !any_change) {          // convert stampped  to '?'
+                    ans.push_back(i);                  // add stamp to answer
+                    
+                    for (int j=0; j<ls; j++) 
+                        target[i+j] = '?';
+                    
+                    has_changed = true;                 
+                }
+            }
+        }
+        // empty array case
+        for(int i = 0; i<lt; i++) {
+            if (target[i] != '?') return {};
+        }
+        
+        // revert ans order
+        reverse(ans.begin(), ans.end());
+        
+        return ans;
+    }
+};
+
 //     bool canReplace(string target, int pos, string stamp) {
 //         for(int i=0; i<stamp.size(); i++) {
 //             if(target[i+pos] != '?' && target[i+pos] != stamp[i]) {
@@ -19,57 +64,6 @@ public:
 //         }
 //         return cnt;
 //     }
-    
-    vector<int> movesToStamp(string stamp, string target) {
-        int ls = stamp.length();
-        int lt = target.length();
-        vector<int> ans;
-        bool at_least_1 = true;
-        int end   = lt-ls;
-        
-        while (at_least_1)  // made at least one conversion to '*'
-        {
-            at_least_1 = false;
-            for(int i = 0; i<=end; i++)
-            {
-                if (target[i] == '#') continue;
-                bool match = true;
-                bool any_change = false;
-                for (int j = 0; j<ls; j++)
-                {
-                    if (target[i+j] == '*') continue;  // already stampped
-                    if (target[i+j] == '#') break;
-                    if(stamp[j] != target[i+j])        // char matced
-                    {
-                        match = false;
-                        break;
-                    }
-                    any_change = true;                 // char to stamp
-                }
-                if (match && any_change)               // convert stampped  to '*'
-                {
-                    ans.push_back(i);                  // add stamp to answer
-                    for (int j=0; j<ls; j++) target[i+j] = '*';
-                    at_least_1 = true;                 // set while flag 
-					// mark skip area convert '*' to '#'
-                    for (int j=i-1; j>=0 && target[j] == '*'; j--) target[j] = '#'; 
-                }
-            }
-        }
-        // check if all tagrget covered
-        for(int i = 0; i<lt; i++)
-        {
-            if (target[i] != '*' && target[i] != '#') return {};
-        }
-        
-        // revert ans order
-        int i=0,j=ans.size() -1;
-        while(i<j)
-            swap(ans[i++],ans[j--]);
-        
-        return ans;
-    }
-};
 // vector<int>visited(target.size(),0);
         // int cnt=0;
 //         vector<int>ans;  // for storing starting index of every stamp found in target
