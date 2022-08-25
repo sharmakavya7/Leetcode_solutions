@@ -2,22 +2,21 @@ class Solution {
 public:
     string removeKdigits(string num, int k) {
         stack<char>s;
-        //int i = 0;
-        //while(!s.empty())
+
         //storing
         int n = num.size(); 
-        for(char c : num) {
-            while(k>0 && !s.empty() && s.top()>c) {
+        for(int i=0; i<num.size(); i++) {
+            while(k>0 && !s.empty() && s.top()>num[i]) {  // meaning, there is a dip, so remove the maxima which is the top of stack
                 s.pop();
                 k--;
             }
-            if(!s.empty() || c!= '0') {   
-                s.push(c);
+            if(!s.empty() || num[i]!= '0') {   
+                s.push(num[i]);
             }
             
         }
         //removing the largest value from the top
-        while(!s.empty() && k--) 
+        while(!s.empty() && k--) // this is to make sure we fulfil the deletion condition
             s.pop();
         
         if(s.empty()) 
