@@ -1,0 +1,3 @@
+- store the left cumulative product in ans array
+- then for right cum product, maintain a right variable that keeps track of the product of right elements so far.
+- start taversing the array from the end,
