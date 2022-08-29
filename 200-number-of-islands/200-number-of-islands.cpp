@@ -1,7 +1,7 @@
 class Solution {
 public:
     void helper(vector<vector<char>>& grid, int i, int j) {
-        if( i>=grid.size() || j>=grid[0].size() || grid[i][j]!='1') {
+        if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || grid[i][j]!='1') {
             return;
         }
         grid[i][j]=0;   // mark water, i.e. visited
