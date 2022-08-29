@@ -9,24 +9,20 @@
  */
 class Solution {
 public:
-    TreeNode* helper(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(!root) {
-            return NULL;
-        }
-        if(p==root || q==root) {
+    int cnt{0};
+    TreeNode* dfs(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root) return nullptr;
+        auto left = dfs(root->left, p, q);
+        auto right = dfs(root->right, p, q);
+        if(left && right) return root;
+        if(root == p || root == q){
+            cnt++;
             return root;
         }
-        auto lefty = helper(root->left, p, q);
-        auto righty = helper(root->right, p, q);
-        if(lefty==NULL) {       // ek NULL hai to dusra return karo cz vo not null ho skta hai
-            return righty;
-        }
-        if(righty==NULL){
-            return lefty;
-        }
-        else return root;   // if both are not null, return root cz that's the LCA
+        return left != nullptr ? left : right;        
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return helper(root, p, q);
+        auto ans = dfs(root, p, q);
+        return cnt==2 ? ans : NULL;
     }
 };
