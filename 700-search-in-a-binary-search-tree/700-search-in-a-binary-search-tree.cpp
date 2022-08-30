@@ -11,22 +11,10 @@
  */
 class Solution {
 public:
-    TreeNode*  helper(TreeNode* root, int val) {
-        if(!root) {
-            return NULL;
-        }
-        // if(val == root->val) {
-        //     return root;
-        // }
-        if(val < root->val) {
-            return helper(root->left, val); 
-        }
-        else if(val > root->val) {
-            return helper(root->right, val);
-        }
-        else return root;
-    }
     TreeNode* searchBST(TreeNode* root, int val) {
-        return helper(root, val);
+        while(root && val!=root->val) {
+            root = root->val > val ? root->left : root->right;
+        }
+        return root;
     }
 };
