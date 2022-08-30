@@ -8,47 +8,71 @@
  * };
  */
 class Solution {
-public:
-    void dfs(TreeNode* root, unordered_map<TreeNode*, TreeNode*> &backEdge, TreeNode* target){
-        if(!root || (root == target)) return;
-    
-        if(root->left){
-            backEdge[root->left] = root;
-            dfs(root->left, backEdge, target);
-        }
-        if(root->right){
-            backEdge[root->right] = root;
-            dfs(root->right, backEdge, target);
+private:
+    void markParent(TreeNode* root, unordered_map<TreeNode*,TreeNode*>&mp) {
+        queue<TreeNode*>q;
+        q.push(root);
+        while(!q.empty()) {
+            auto front = q.front();
+            q.pop();
+            if(front->left) {
+                q.push(front->left);
+                mp[front->left] = front;
+            }
+            if(front->right) {
+                q.push(front->right);
+                mp[front->right] = front;
+            }
         }
     }
+public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        unordered_map<TreeNode*, TreeNode*> backEdge;
-        unordered_set<TreeNode*> visited;
-        vector<int> res;
-        dfs(root, backEdge, target);
-        queue<TreeNode*> q;
+        unordered_map<TreeNode*,TreeNode*>mp;    // parent tracker [node->parent]
+        markParent(root, mp);  // basically BFS to mark every parent
+        
+        unordered_map<TreeNode*, bool>visited;
+        queue<TreeNode*>q;
         q.push(target);
-        while(!q.empty() && k >= 0){
-            int s = q.size();
-            while(s--){
+        visited[target] = true;
+        int radial_dist = 0;
+        
+        while(!q.empty()) {
+            int sz = q.size();
+            if(radial_dist++==k) 
+                break;
+
+            for(int i=0; i<sz; i++) {
                 TreeNode* front = q.front();
-                int val = front->val; q.pop();
-                visited.insert(front);
-                
-                if(k == 0) 
-                    res.push_back(val); 
-                
-                if(!visited.count(backEdge[front]) && backEdge[front]) 
-                    q.push(backEdge[front]);
-                
-                if(!visited.count(front->left) && front->left) 
+                q.pop();
+                // if left exist
+                if(front->left && !visited[front->left]) {
                     q.push(front->left);
-                
-                if(!visited.count(front->right) && front->right) 
+                    visited[front->left] = true;
+                }
+                // if right exists
+                if(front->right && !visited[front->right]) {
                     q.push(front->right);
-            } 
-            k--;  
+                    visited[front->right] = true;
+                }
+                // if parent exists
+                if(mp[front] && !visited[mp[front]]) {
+                    q.push(mp[front]);
+                    visited[mp[front]] = true;
+                }
+            }
         }
-        return res;
+        vector<int> result;
+        while(!q.empty()) {
+            TreeNode* current = q.front(); q.pop();
+            result.push_back(current->val);
+        }
+        return result;
     }
 };
+
+
+
+
+
+
+
