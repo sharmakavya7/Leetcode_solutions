@@ -1,0 +1,67 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int findPos(vector<int> inorder,int element,int n){
+		for(int i=0;i<n;i++){
+			if(inorder[i] == element)
+				return i;
+		}
+		return -1;
+	}
+    TreeNode* helper(vector<int> preorder,vector<int> inorder,int &prestart , int instart,int inend , int n) {
+        if(prestart >= n || instart > inend){
+			return NULL;
+		}
+
+		int ele = preorder[prestart++];  //starting ele of preorder
+		TreeNode* root = new TreeNode(ele);  //creating new node
+
+		//now finding ele position in inorder
+		int pos = findPos(inorder , ele , n);
+
+		root->left = helper(preorder,inorder,prestart,instart,pos-1,n);
+		root->right = helper(preorder,inorder,prestart,pos+1,inend,n);
+
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = inorder.size();
+		int preInd = 0;
+        return helper(preorder,inorder,preInd,0,n-1,n);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
