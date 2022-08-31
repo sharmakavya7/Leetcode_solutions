@@ -11,33 +11,36 @@
  */
 class Solution {
 public:
+    TreeNode* findMinNode(TreeNode* root) {
+        if (root->left) return findMinNode(root->left);
+        return root;
+    }
     TreeNode* deleteNode(TreeNode* root, int key) {
-        // if(key==0) return root;
-        if(!root) {
-            return NULL;
-        }
-        if(root) {
-            if(root->val < key) {
-                root->right = deleteNode(root->right, key);
+        if (!root) 
+            return root;    
+        if (root->val > key)
+            root->left = deleteNode(root->left, key);
+        
+        else if (root->val < key)
+            root->right = deleteNode(root->right, key);
+        
+        else {
+            if (!root->left) {
+                TreeNode* right = root->right;
+                delete root;
+                return right;
             }
-            else if(root->val > key) {
-                root->left = deleteNode(root->left, key);
+            else if (!root->right) {
+                TreeNode* left = root->left;
+                delete root;
+                return left;
             }
-            else {  // key found
-                if(!root->left && !root->right) 
-                    return NULL;          //No child 
-
-                if (!root->left || !root->right) { //One child -> replace node with child
-                    return root->left ? root->left : root->right;   
-                }
-        // Two child condition
-                TreeNode* temp = root->left;
-                while(temp->right != NULL) temp = temp->right;     
-                root->val = temp->val;                      
-                root->left = deleteNode(root->left, temp->val);
+            else {
+                TreeNode* successor = findMinNode(root->right); // find the inorder successor (the minimal node in right subtree)
+                root->val = successor->val;
+                root->right = deleteNode(root->right, successor->val);
             }
         }
         return root;
-        
     }
 };
