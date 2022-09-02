@@ -11,30 +11,22 @@
  */
 class Solution {
 public:
-    vector<int>ans;
-    void inOrder(TreeNode* root) {
-        if (!root)
-            return;
-        inOrder(root->left);
-        ans.push_back(root->val);
-        inOrder(root->right);
-    }
-
-//  bool validBST(TreeNode* root, long min, long max) {
-//         if(root==nullptr) 
-//             return true;
-//         if(root->val<=min || root->val>=max) {
-//             return false;
-//         }
-//         return validBST(root->left, min, root->val) && validBST(root->right, root->val, max);
+    // When we recurse on the left subtree, the upper bound becomes the value of its root.
+    // When we recurse on the right subtree, the lower bound becomes the value of its root.
+    bool helper(TreeNode* root, long mini, long maxi) {
+        if(!root) {
+            return true;
+        }
+        if (root -> val <= mini || root -> val >= maxi) {
+            return false;
+        }
+        bool lefty = helper(root->left, mini, root->val);
         
-        //return true;
-//    }
+        bool righty = helper(root->right, root->val, maxi);
+        
+        return lefty && righty;
+    }
     bool isValidBST(TreeNode* root) {
-        inOrder(root);
-        for(int i=1; i<ans.size(); i++)
-            if(ans[i] <= ans[i-1])
-                return false;
-        return true;
+        return helper(root, LONG_MIN, LONG_MAX);
     }
 };
