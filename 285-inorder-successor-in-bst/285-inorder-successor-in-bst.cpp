@@ -9,24 +9,19 @@
  */
 class Solution {
 public:
-    // vector<TreeNode*>ans;
-    TreeNode* helper(TreeNode* root, TreeNode*p) {
-        if(!root || p==nullptr) {
-            return nullptr;
-        }
-        // if(root->left == p) {
-        //     return root;
-        // }
-        // if(root == p) {
-        //     return root->right;
-        // }
-        if(root->val <= p->val)
-            return helper(root->right,p);
-        TreeNode* left = helper(root->left,p);
-        
-        return left!=nullptr?left:root;
-    }
+    // TC: O(H)
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
-        return helper(root, p);
+        TreeNode* successor = NULL;
+        
+        while(root) {
+            if(p->val >= root->val) {
+                root = root->right;
+            }
+            else {
+                successor = root;
+                root = root->left;
+            }
+        }
+        return successor;
     }
 };
