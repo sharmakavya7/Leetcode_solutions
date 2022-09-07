@@ -1,1 +1,1 @@
-​
+The difference that can observed is that for left part we create parentheses even when there is no left child, but for right part we create parentheses only when there is right child.
