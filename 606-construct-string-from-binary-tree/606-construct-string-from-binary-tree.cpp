@@ -20,7 +20,7 @@ public:
         if(root->left) {
             s = s + "(" + tree2str(root->left) + ")";
         }
-        else if(root->right) {
+        else if(!root->left && root->right) {  //left side not present, but right side present (expln down)
             s = s + "()";
         }
         if(root->right) {
@@ -29,3 +29,6 @@ public:
         return s;
     }
 };
+
+// NOTE:
+// The difference that can observed is that for left part we create parentheses even when there is no left child, but for right part we create parentheses only when there is right child.
