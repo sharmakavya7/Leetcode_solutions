@@ -1,23 +1,30 @@
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        vector<int>ans;
-        int cnt=0;  // storing number of zeroes
-        for(int i=0; i<nums.size(); i++) {
-            if(nums[i]==0) {
-                cnt++;
+        int n = nums.size();
+        int k = 0;
+        while (k < n) {
+            if (nums[k] == 0) {
+                break;
+            } 
+            else {
+              k = k + 1;
             }
         }
-        for(int i=0; i<nums.size(); i++) {
-            if(nums[i]!=0) {
-                ans.push_back(nums[i]);
+        //finding zeros and immediate non-zero elements and swapping them
+        int i = k, j = k + 1;
+
+        while (i < n && j < n) {
+            if (nums[j] != 0) {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                i++;
+
             }
+
+            j++;
+
         }
-        while(cnt) {
-            ans.push_back(0);
-            cnt--;
-        }
-        nums.clear();
-        copy(ans.begin(), ans.end(), back_inserter(nums)); 
     }
 };
