@@ -5,7 +5,7 @@ public:
         int n = grid[0].size();
         vector<vector<int>>vis(m, vector<int>(n,0));
         queue<pair<pair<int,int>,int>>q;
-        
+        int cntfresh=0;
         // traverse and get all rotten oranges
         for(int i=0; i<m; i++) {
             for(int j=0; j<n; j++) {
@@ -13,14 +13,16 @@ public:
                     q.push({{i,j},0});
                     vis[i][j]=2;
                 }
-                // else vis[i][j]=0;
+                else if(grid[i][j]==1) {
+                    cntfresh++;
+                }
             }
         }
         int delrow[] = {-1, 0, +1, 0};
         int delcol[] = {0, +1, 0, -1};
         // up, right, down, left
         int time = 0;
-        
+        int cnt=0;
         while(!q.empty()) {
             int row = q.front().first.first;
             int col = q.front().first.second;
@@ -36,16 +38,13 @@ public:
                     && grid[nrow][ncol]==1 && vis[nrow][ncol]!=2) {
                         q.push({{nrow,ncol},t + 1});
                         vis[nrow][ncol]=2;
+                        cnt++;
                 }
             }
         }
         // bool flag = false;
-        for(int i=0; i<m; i++) {
-            for(int j=0; j<n; j++) {
-                if(vis[i][j]!=2 && grid[i][j]==1) {
-                    return -1;
-                }
-            }
+        if(cnt!=cntfresh) {
+            return -1;
         }
         return time;
     }
