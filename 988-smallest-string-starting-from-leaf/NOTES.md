@@ -1,1 +1,4 @@
-​
+- String me aise push karo taki apan ko reverse hi na krna pade (but we can do it via reversing also, vo shyd zyda time lega)
+- Push elements,  but before pushing, type cast them into char
+- min can compare 2 strings, i.e. min(ans, min) is possible to check lexicographically smaller.
+-
