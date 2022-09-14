@@ -1,65 +1,36 @@
 class Solution {
 public:
-    int helper(string s, char st) {
-        int swaps = 0;
-        for (int i = 0; i < s.size(); i++) {
-            if (s[i] == st && i % 2 != 0) 
-                swaps++;
-        }
-        return swaps;
-    }
     int minSwaps(string s) {
-        // int zeros = count(begin(s), end(s), '0');
-        int zeros = 0;
-        int ones = 0;
-        for (auto c : s) {
-            if (c == '1')
-                ones++;
-            else zeros++;
+        int even1 = 0, odd1 = 0, n = s.size();
+        
+        // Number of '1' at event position
+        for (int i=0; i<n; i+=2) {
+            even1 += s[i] == '1';
         }
-        if (abs(zeros - ones) > 1)
-            return -1;
         
-        if (zeros < ones)
-            return helper(s, '1');
+        // Number of '1' at odd position
+        for (int i=1; i<n; i+=2) {
+            odd1 += s[i] == '1';   
+        }
         
-        if (zeros > ones) 
-            return helper(s, '0');
+        // If length is odd -> It should be: 10101 or 01010
+        if (n % 2 == 1) {
+            
+            // 01010 case
+            if (even1 + odd1 == n/2) {
+                return even1;
+                
+            } 
+            else if (even1 + odd1 == n/2 + 1) { // 10101 case
+                return odd1;
+            }
+        } 
+        else {
+            // Should be 010101 or 101010
+            if (even1 + odd1 == n/2)
+                return min(even1, odd1);
+        }
         
-        return min(helper(s, '1'), helper(s, '0'));  
+        return -1;
     }
 };
-
-/*
-
-int extraone = 0;
-        // int needzero = 0;
-        int extrazero = 0;
-        // int needone = 0;
-        int cnt=0;
-        for(int i=0; i<s.size(); i++) {
-            // if start from 1
-            if(s[i]==1) {
-                if(s[i+1]!='0') {
-                    extraone++;
-                    extrazero--;
-                    cnt++;
-                    s[i+1] = '0';
-                }
-            }
-            else {
-                if(s[i+1]!='1') {
-                    extrazero++;
-                    extraone--;
-                    cnt++;
-                    s[i+1] = '1';
-                }
-            }
-        }
-        cout<<extraone<<" "<<extrazero<<" ";
-        if(extraone<0 || extrazero<0) {
-            return -1;
-        }
-        return cnt/2;
-
-*/
