@@ -12,26 +12,24 @@
 class Solution {
 public:
     string ans = "";   // {013} -> {310}
-    string str = "";   // {014} -> {410}
+    // string str = "";   // {014} -> {410}
     
-    void helper(TreeNode* root) {
-        if(!root) return;
+    void helper(TreeNode* node,string tmp){
         
-        str += (char)(root->val+'a');
-        
-        if(root->left ==root->right) {
-            string s = str;
-			reverse(s.begin(),s.end());
-            if(ans=="" || s<ans) ans = s;
-            
+        tmp= (char)(node->val+'a') + tmp;
+        if(node->left==NULL && node->right==NULL ) {
+            if(ans=="") ans= tmp;
+            else{
+                ans= min(ans,tmp);
+            }
         }
-        if(root->left) helper(root->left);
-        if(root->right) helper(root->right);
-        str.pop_back();
+        if(node->left) helper(node->left,tmp);
+        if(node->right) helper(node->right, tmp);
     }
         
     string smallestFromLeaf(TreeNode* root) {
-        helper(root);
+        string str = "";
+        helper(root, str);
         return ans;
     }
 };
