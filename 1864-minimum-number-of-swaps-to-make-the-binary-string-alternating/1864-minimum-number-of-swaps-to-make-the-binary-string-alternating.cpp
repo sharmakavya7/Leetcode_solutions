@@ -1,36 +1,34 @@
 class Solution {
 public:
+    int helper(string s, char st) {
+        int swaps = 0;
+        // 0 se shuru kro alternate index dkeho kon kon st ke equal nhi hai
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == st && i % 2 != 0) 
+                swaps++;
+        }
+        return swaps;
+    }
     int minSwaps(string s) {
-        int even1 = 0, odd1 = 0, n = s.size();
-        
-        // Number of '1' at event position
-        for (int i=0; i<n; i+=2) {
-            even1 += s[i] == '1';
+        int zeros = 0;
+        int ones = 0;
+        for (auto c : s) {
+            if (c == '1')
+                ones++;
+            else zeros++;
         }
+        if (abs(zeros - ones) > 1)
+            return -1;
         
-        // Number of '1' at odd position
-        for (int i=1; i<n; i+=2) {
-            odd1 += s[i] == '1';   
-        }
+        // case 1 --> if ones>zeros then 0th position pe 1 hi aa skta to make alternating
+        if (zeros < ones)
+            return helper(s, '1');
         
-        // If length is odd -> It should be: 10101 or 01010
-        if (n % 2 == 1) {
-            
-            // 01010 case
-            if (even1 + odd1 == n/2) {
-                return even1;
-                
-            } 
-            else if (even1 + odd1 == n/2 + 1) { // 10101 case
-                return odd1;
-            }
-        } 
-        else {
-            // Should be 010101 or 101010
-            if (even1 + odd1 == n/2)
-                return min(even1, odd1);
-        }
+        // case 2 --> if zero>ones then 0th position pe 0 hi aa skta to make alternating
+        if (zeros > ones) 
+            return helper(s, '0');
         
-        return -1;
+        //case 3 --> if zero==ones then koi bhi starting me aa skta dono case check kro MIN
+        return min(helper(s, '1'), helper(s, '0'));  
     }
 };
