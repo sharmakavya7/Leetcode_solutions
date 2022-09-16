@@ -7,8 +7,8 @@ public:
             return 0;
         if (dp[i][j] != INT_MIN) 
             return dp[i][j];
-        int left = solve(i + 1, n, j + 1, nums, multipliers) + (nums[i] * multipliers[j]);
-        int right = solve(i, n, j + 1, nums, multipliers) + (nums[(n - 1) - (j - i)] * multipliers[j]);
+        int left = (nums[i] * multipliers[j]) + solve(i+1, n, j+1, nums, multipliers);
+        int right = (nums[(n-1) -(j-i)] * multipliers[j]) + solve(i, n, j+1, nums, multipliers);
         return dp[i][j] = max(left, right);
     }
     
