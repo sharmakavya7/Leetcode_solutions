@@ -32,11 +32,11 @@ public:
                 TreeNode* front = q.front();
                 q.pop();
                 
-                cout<<front->val<<" ";
+                // cout<<front->val<<" ";
                 
                 levelsum += front->val;
                 
-                cout<<" sum:"<<levelsum<<" ";
+                // cout<<" sum:"<<levelsum<<" ";
                 
                 if(front->left) {
                     q.push(front->left);
@@ -48,8 +48,8 @@ public:
             if (levelsum > maxi) 
                 ans = level;
             maxi = max(maxi, levelsum);
-            cout<<maxi<<" ";
-            cout<<endl;
+            // cout<<maxi<<" ";
+            // cout<<endl;
         }
         return ans;
     }
