@@ -13,7 +13,7 @@ public:
     
 //     OPTIMAL:
     
-//     We can use priority_queue with greater to create a min heap instead of using vector and explicitly sorting after insert.
+//     We can use a min heap instead of using vector and explicitly sorting after insert.
 //     Priority_queue will sort automatically and then you have to just replace values after insertion.
     
 //     T.C: O(m*n)
@@ -21,12 +21,11 @@ public:
         int m = mat.size();
         int n = mat[0].size();
         
-        // vector<int>diagonal;
         map<int, priority_queue<int, vector<int>, greater<int>>> diagonal;
         
         for(int i=0; i<m; i++) {
             for(int j=0; j<n; j++) {
-                diagonal[j-i].push(mat[i][j]);  // this is getting pushed in a priority queue not in map, map ke [j-i]th key me ye wali priority queue bani hai, jisme hum diagonal elements push kr rhe 
+                diagonal[j-i].push(mat[i][j]);  // this is getting pushed in a priority queue not in map, map ke [j-i]th key ke value me ye wali priority queue bani hai, jisme hum diagonal elements push kr rhe 
             }
         }
         for(int i=0; i<m; i++) {
