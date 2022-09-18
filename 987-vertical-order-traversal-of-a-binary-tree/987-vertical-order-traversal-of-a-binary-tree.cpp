@@ -12,8 +12,9 @@
 class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
-        map<int, map<int, multiset<int>>> mp; //multiset so that same values could be stored
-        
+        map<int, map<int, multiset<int>>> mp; //multiset so that same values could be stored in sorted order
+        // Mtlb ek vertical pe, multiple levels ho skte hai, Aur un levels me multiple nodes present ho skti hai
+        // hence, map ke andr ek aur map hai, jisme ek multiset hai
         queue<pair<TreeNode*, pair<int, int>>> todo; // node, vertical, level
         
         todo.push({root, {0, 0}});             
