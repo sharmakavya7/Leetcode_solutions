@@ -1,0 +1,1 @@
+First, we calculate sum of even numbers. Then, for each query, if A[index] is even, we subtract its value from sum. Then we add val to A[index]. If A[index] is now even, we add its value to sum.
