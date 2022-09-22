@@ -27,6 +27,7 @@ public:
         }
         return hgt;
     }
+    // logn x logn
     int countNodes(TreeNode* root) {
         if(!root) {
             return 0;
@@ -34,6 +35,7 @@ public:
         int lh = leftHeight(root);
         int rh = rightHeight(root);
         
+        // formula for total no of nodes in a CBT = 2^height - 1;
         if(lh==rh) {
             return (1<<lh) -1;
         }
