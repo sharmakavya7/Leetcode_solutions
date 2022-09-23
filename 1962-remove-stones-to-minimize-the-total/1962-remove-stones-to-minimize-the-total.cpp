@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // TC: O((n+k) logn)
     int minStoneSum(vector<int>& piles, int k) {
         priority_queue<int>maxh;
         
@@ -9,17 +10,14 @@ public:
         
         while(k && !maxh.empty()) {
             int top = maxh.top();
-            // cout<<"before: "<<top<<" ";
             maxh.pop();
             top-=(top/2);
-            // cout<<"after: "<<top<<" ";
             maxh.push(top);
             k--;
         }
         
         int stones=0;
         while(!maxh.empty()) {
-            // cout<<stones<<" ";
             stones+=maxh.top();
             maxh.pop();
         }
