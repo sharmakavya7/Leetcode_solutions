@@ -8,13 +8,18 @@ public:
         int ans = 0;  // total number of units
         
         for(int i=0; i<boxTypes.size(); i++) {
+            
             if(truckSize > cntBox+boxTypes[i][0]) {
+                
                 ans+=(boxTypes[i][0]*boxTypes[i][1]);
                 cntBox += boxTypes[i][0];
             }
             else {
                 int temp = truckSize-cntBox;
+                cntBox+=temp;
                 ans+=(temp*boxTypes[i][1]);
+            }
+            if(cntBox - truckSize==0) {
                 break;
             }
         }
