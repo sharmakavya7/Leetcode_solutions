@@ -1,25 +1,11 @@
 class Solution {
 public:
-    int numEnclaves(vector<vector<int>>& grid) {
+    int delrow[4] = {-1,0,+1,0};
+    int delcol[4] = {0,+1,0,-1};
+    
+    void bfs(queue<pair<int,int>>&q, vector<vector<int>> &vis, vector<vector<int>>& grid)  {
         int n = grid.size();
         int m = grid[0].size();
-        queue<pair<int,int>> q;
-        vector<vector<int>> vis(n,vector<int> (m,0));
-        
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                //First row, first col, last row, last col
-                if(i == 0 || j == 0 || i== n-1 ||j == m-1){
-                    if(grid[i][j] == 1){
-                        q.push({i,j});
-                        vis[i][j] = 1;
-                    }
-                }
-            }
-        }
-        int delrow[] = {-1,0,+1,0};
-        int delcol[] = {0,+1,0,-1};
-        
         while(!q.empty()){
             int row = q.front().first;
             int col = q.front().second;
@@ -35,6 +21,27 @@ public:
                 }
             }
         }
+    }
+    
+    int numEnclaves(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        queue<pair<int,int>> q;
+        vector<vector<int>> vis(n,vector<int> (m,0));
+        
+        // MULTI SOURCE BFS
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                //First row, first col, last row, last col (boundary)
+                if(i == 0 || j == 0 || i== n-1 ||j == m-1) {
+                    if(grid[i][j] == 1){
+                        q.push({i,j});
+                        vis[i][j] = 1;
+                    }
+                }
+            }
+        }
+        bfs(q, vis, grid);
         int cnt = 0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
