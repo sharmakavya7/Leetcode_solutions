@@ -1,38 +1,44 @@
 class Solution {
-public:
-    void dfs(int i, vector<int> &vis, vector<int> adj[]){
-        vis[i]=1;
-        for(auto x: adj[i]){
-            if(vis[x]==0){
-                dfs(x,vis,adj);
-            }
-        }
+private:
+    void make_set(int n) {
+        for(int i = 0; i < n; i++) 
+            parent[i] = -1;
     }
     
-    int findCircleNum(vector<vector<int>>& isConnected) {
-        int V = isConnected.size();
-        
-        // pehle list bna lo matrix se extract krke
-        vector<int>adjList[V];
-        
-        for(int i=0; i<V; i++) {
-            for(int j=0; j<V; j++) {
-                if(isConnected[i][j]==1) {
-                    adjList[i].push_back(j);
-                    adjList[j].push_back(i);
-                }
-            }
-        }
-        
-        vector<int>vis(V, 0);
-        int cnt = 0;
-        
-        for(int i=0; i<V; i++) {
-            if(!vis[i]) {
-                cnt++;
-                dfs(i, vis, adjList);
-            }
-        }
-        return cnt;
+    int find_set(int v) {
+        if (parent[v] < 0)
+            return v;
+        return parent[v] = find_set(parent[v]);
     }
+    
+    void join(int a, int b) {
+        int p1 = find_set(a);
+        int p2 = find_set(b);
+        if (p1 != p2)
+            parent[p2] = p1;
+    }
+    
+public:
+    int parent[201];
+    
+    int findCircleNum(vector<vector<int>>& M) {
+        int i, j, groups = 0, n = M.size();
+        make_set(n);
+          
+        for(i = 0; i < n; i++) {
+            for(j = i + 1; j < n; j++) {
+                if(M[i][j]==1)
+                    join(i, j);
+            }
+        }
+        
+        for(i = 0; i < n; i++) {
+            if(parent[i] < 0)
+                groups++;
+        }
+        
+        return groups;
+    }
+
+
 };
