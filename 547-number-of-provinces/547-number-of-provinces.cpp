@@ -14,8 +14,14 @@ private:
     void join(int a, int b) {
         int p1 = find_set(a);
         int p2 = find_set(b);
-        if (p1 != p2)
-            parent[p2] = p1;
+        if (p1 == p2)
+            return;
+        
+        if(parent[p1]<parent[p2]) {
+            swap(p1,p2);
+        }
+        parent[p1]+=parent[p2];
+        parent[p2] = p1;
     }
     
 public:
