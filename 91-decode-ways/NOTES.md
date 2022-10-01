@@ -1,0 +1,1 @@
+prev_ways is the number of ways to decode s up to index i-1.
