@@ -1,8 +1,7 @@
 class Solution {
 public:
-    int dp[31][1001];
-    int MOD = 1e9+7;
-    int solve(int d,int f,int target) {
+    int mod = 1e9+7;
+    int solve(int d,int f,int target, vector<vector<int>> &dp) {
         
         if(target==0 && d==0) 
             return 1;
@@ -16,13 +15,14 @@ public:
         
         for(int i=1;i<=f;i++) {
             
-            ans = (ans + solve(d-1, f, target-i)) % MOD;
+            ans = (ans + solve(d-1, f, target-i, dp)) % mod;
         }
         return dp[d][target]=ans;
     }
-    
-    int numRollsToTarget(int d, int f, int target) {
-        memset(dp, -1, sizeof dp);
-        return solve(d, f, target);
+public:
+    int numRollsToTarget(int n, int k, int target) {
+        
+		vector<vector<int>> dp(n+1,vector<int>(target+1,-1));
+        return solve(n, k, target, dp);
     }
 };
