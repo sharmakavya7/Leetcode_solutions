@@ -15,9 +15,11 @@ public:
     int findMaxDistance(map<TreeNode*, TreeNode*> &mpp, TreeNode* target) {
     queue<TreeNode*> q; 
     q.push(target); 
+    // to keep track of the node and it's parent, use map [node->parent]
     map<TreeNode*,int> vis; 
     vis[target] = 1;
-    int time = 0;       // timer to infect entire tree
+    // timer to infect entire tree
+    int time = 0;       
     while(!q.empty()) {
         int sz = q.size();
         int fl = 0; 
