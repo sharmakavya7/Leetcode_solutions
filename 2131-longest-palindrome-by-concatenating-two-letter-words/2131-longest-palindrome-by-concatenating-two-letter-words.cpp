@@ -20,20 +20,20 @@ public:
                 mp[temp]--;
                 mp[word]--;
                 cnt+=4;
-                cout<<"kk"<<" ";
+                // cout<<"kk"<<" ";
             }
             // word-> gg temp-> gg  (string contains 2 same lettered word, ie, "gg", "gg")
             else if(temp==word && mp[word]>1) {
                 mp[word]-=2;
                 cnt+=4;
-                cout<<"ll"<<" ";
+                // cout<<"ll"<<" ";
             } 
             // word-> gg temp->gg (string contains only 1 same lettered word, ie, "gg")
             else if(temp==word && mp[word]>0 && flag==true) {
                 mp[word]--;
                 cnt+=2;
                 flag=false;
-                cout<<"kitni baar?"<<" ";
+                // cout<<"kitni baar?"<<" ";
             }
         }
         return cnt;
