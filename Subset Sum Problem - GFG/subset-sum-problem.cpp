@@ -29,9 +29,35 @@ public:
     }
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
-        vector<vector<int>> dp (arr.size(), vector<int> (sum+1, -1));
+        // vector<vector<int>> dp (arr.size(), vector<int> (sum+1, -1));
         // memset(dp, -1, sizeof(dp));
-        return subsetSum(arr.size()-1, sum, arr, dp);
+        // return subsetSum(arr.size()-1, sum, arr, dp);
+        
+        int n = arr.size();
+        vector<vector<bool>> dp (arr.size(), vector<bool> (sum+1, 0));
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(j == 0) {
+                    dp[i][j] = 1;
+                }
+                if(arr[0] == j) {
+                    dp[i][j] = 1;
+                }
+            }
+        }
+        
+        for(int i=1; i<n; i++) {
+            for(int j=1; j<=sum; j++) {
+                bool notTake = dp[i-1][j];
+                bool take = false;
+                if(arr[i] <= j) {
+                    take = dp[i-1][j-arr[i]];
+                }
+               dp[i][j] = take || notTake;
+            }
+        }
+        return dp[n-1][sum];
     }
 };
 
