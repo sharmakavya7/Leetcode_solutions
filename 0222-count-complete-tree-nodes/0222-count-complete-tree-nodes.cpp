@@ -11,34 +11,31 @@
  */
 class Solution {
 public:
-    int leftHeight(TreeNode* root) {
-        int hgt = 0;
-        while(root) {
-            hgt++;
-            root = root->left;
+    int leftheight(TreeNode* root) {
+        TreeNode* cur = root;
+        int lefth = 0;
+        while(cur) {
+            cur = cur -> left;
+            lefth++;
         }
-        return hgt;
+        return lefth;
     }
-     int rightHeight(TreeNode* root) {
-        int hgt = 0;
-        while(root) {
-            hgt++;
-            root = root->right;
+    int rightheight(TreeNode* root) {
+        TreeNode* cur = root;
+        int righth = 0;
+        while(cur) {
+            cur = cur -> right;
+            righth++;
         }
-        return hgt;
+        return righth;
     }
-    // logn x logn
     int countNodes(TreeNode* root) {
-        if(!root) {
-            return 0;
+        int lh = leftheight(root);
+        int rh = rightheight(root);
+        if(lh == rh) {
+            return pow(2, lh) - 1;
+        } else {
+            return countNodes(root->left) + countNodes(root->right) + 1;
         }
-        int lh = leftHeight(root);
-        int rh = rightHeight(root);
-        
-        // formula for total no of nodes in a CBT = 2^height - 1;
-        if(lh==rh) {
-            return (1<<lh) -1;
-        }
-        return 1+ countNodes(root->left) + countNodes(root->right);
     }
 };
